@@ -7,33 +7,16 @@ function quickSort (arr) {
 
 function sort (arr, l, r) {
   if (l >= r) return
+  // 生成[l, r]随机的索引
+  let random = Math.random(Math.random() * (r - l)) + l
+  swap(arr, l, random) // 将标定点替换成随机值
   let p = partition(arr, l, r)
   sort(arr, l, p - 1)
   sort(arr, p + 1, r)
 }
 
-
-function partition (arr, l, r) {
-  // 生成[l, r]随机的索引
-  let p = Math.random(Math.random() * (r - l)) + l
-  swap(arr, l, p) // 将标定点替换成随机值
-  // arr[l+1, j] <v arr[j+i, r] >=v 
-  let j = l;
-  for (let i = l + 1; i <= r; i++) {
-    if (arr[i] < arr[l]) {
-      j++
-      swap(arr, i, j)
-    }
-  }
-  swap(arr, l, j)
-  return j
-}
-
 // 双路排序
 function partition2 (arr, l, r) {
-  // 生成[l, r]随机的索引
-  let p = Math.random(Math.random() * (r - l)) + l
-  swap(arr, l, p) // 将标定点替换成随机值
   // arr[l+1, j] <v arr[j+i, r] >=v 
   let i = l + 1, j = r
   while (true) {
@@ -51,6 +34,20 @@ function partition2 (arr, l, r) {
   swap(arr, l, j)
   return j
 }
+
+function partition (arr, l, r) {
+  // arr[l+1, j] <v arr[j+i, r] >=v 
+  let j = l;
+  for (let i = l + 1; i <= r; i++) {
+    if (arr[i] < arr[l]) {
+      j++
+      swap(arr, i, j)
+    }
+  }
+  swap(arr, l, j)
+  return j
+}
+
 
 function swap (arr, i, j) {
   let temp = arr[i]

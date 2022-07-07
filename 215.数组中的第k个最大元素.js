@@ -60,7 +60,42 @@ function swap (arr, i, j) {
   arr[i] = arr[j]
   arr[j] = temp
 }
+// 如果在 arr[l, r) 中查找
+var findKthLargest2 = function (nums, k) {
+  let n = nums.length
+  let l = 0, r = n - 1
+  while (l <= r) {
+    let random = Math.floor(Math.random() * (r - l + 1)) + l; //随机选取一个索引
 
-console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2));
+    swap(nums, random, l); //将它和位置r的元素交换，让nums[r]作为基准元素
+    let p = partition(nums, l, r)
+    if (n - k == p) {
+      return nums[p]
+    }
+    if (n - k > p) {
+      l = p + 1
+    } else {
+      r = p - 1
+    }
+  }
+  return -1
+}
+
+function partition3 (nums, l, r) {
+  let j = r, i = l + 1
+  while (true) {
+    while (i <= j && nums[i] < nums[l]) i++
+    while (j >= i && nums[j] > nums[l]) j--
+    if (i >= j) break
+    swap(nums, i, j)
+    i++
+    j--
+  }
+  swap(nums, l, j)
+  return j
+}
+
+
+console.log(findKthLargest2([3, 2, 1, 5, 6, 4, 9, 10, 45], 2));
 // @lc code=end
 
