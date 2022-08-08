@@ -18,7 +18,16 @@
  */
 
 function removeElements(head: ListNode | null, val: number): ListNode | null {
-
+  let dummyHead = new ListNode(0, head)
+  let cur = dummyHead
+  while (cur.next != null) {
+    if (cur.next.val == val) {
+      cur = cur.next.next
+    } else {
+      cur = cur.next
+    }
+  }
+  return dummyHead.next
 };
 // @lc code=end
 
